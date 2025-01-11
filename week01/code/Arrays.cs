@@ -12,8 +12,14 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        number.Length = length;//Set the length of the double equal to length
+        var result = new double[mult];//Have the result be the new number double
+        var mult
+        foreach (var number in number) { //have it cycle through each new number in the double
+            mult = mult + number;//Add the number onto the previous number
+        }
 
-        return []; // replace this return statement with your own
+        return result; // replace this return statement with your own
     }
 
     /// <summary>
@@ -29,5 +35,8 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        List<int> removed = data.GetRange(0, amount); // Get the data that will be removed
+        data.RemoveRange(0, amount); //Remove the data
+        data.AddRange(removed); //Add the removed data back onto the end.
     }
 }
