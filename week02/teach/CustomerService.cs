@@ -1,4 +1,7 @@
-﻿/// <summary>
+﻿using System.ComponentModel.Design;
+
+
+/// <summary>
 /// Maintain a Customer Service Queue.  Allows new customers to be 
 /// added and allows customers to be serviced.
 /// </summary>
@@ -14,11 +17,16 @@ public class CustomerService {
         // Scenario: 
         // Expected Result: 
         Console.WriteLine("Test 1");
-
+        var cs = new CustomerService(10);
+        cs.AddNewCustomer();
+        cs.ServeCustomer();
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
-
+        var gs = new CustomerService(10);
+        gs.AddNewCustomer();
+        gs.ServeCustomer();
+        gs.ServeCustomer();
         // Test 2
         // Scenario: 
         // Expected Result: 
@@ -35,7 +43,7 @@ public class CustomerService {
     private readonly int _maxSize;
 
     public CustomerService(int maxSize) {
-        if (maxSize <= 0)
+        if (maxSize == 0)
             _maxSize = 10;
         else
             _maxSize = maxSize;
@@ -67,7 +75,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
