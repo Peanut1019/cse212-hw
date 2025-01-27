@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Text.Json;
 
 public static class SetsAndMaps
@@ -22,7 +24,17 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var blank = new HashSet<string>();
+        var pairs = new List<string>();
+        foreach (var word in words) {
+            var reverse = blank.Reverse<string>;
+            if (blank.Contains(reverse.ToString())) {
+                pairs.Add($"{blank}, {reverse}");
+            }
+            blank.Add(word);
+        }
+
+        return pairs.ToArray();
     }
 
     /// <summary>
@@ -42,6 +54,12 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
+            var type = fields[3];
+            var people = 0;
+            if (degrees.ContainsKey(type)) {
+                people += 1;
+                degrees[type] = people;
+            }
             // TODO Problem 2 - ADD YOUR CODE HERE
         }
 
@@ -66,7 +84,8 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
+        var words = new Dictionary<string, string>();
+        
         return false;
     }
 
@@ -95,12 +114,17 @@ public static class SetsAndMaps
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
+        var collection = new List<string>();  // Use List to collect strings dynamically
+        
+        foreach (var feature in featureCollection.Features)
+        {
+            foreach (var property in feature.Properties)
+            {
+                // Construct the string for each earthquake feature
+                collection.Add($"{property.Place} - {property.Mag}");
+            }
+        }
 
-        // TODO Problem 5:
-        // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
-        // on those classes so that the call to Deserialize above works properly.
-        // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
-        // 3. Return an array of these string descriptions.
-        return [];
+        return collection.ToArray();
     }
 }
